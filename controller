@@ -1,0 +1,38 @@
+package com.example.demo.controller;
+
+
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.Model.Customer;
+import com.example.demo.Services.Customer_services;
+
+@RestController
+@RequestMapping("/customers")
+public class customer_controller 
+{
+	private Customer_services customerService;
+	public customer_controller(Customer_services customerService)
+	{
+		this.customerService = customerService;
+	}
+	
+	@PostMapping
+	public String createCustomer(@RequestBody Customer customer)
+	{
+		customerService.createCustomer(customer);
+		return "Customer Created Successfully!!!";
+		
+	}
+	
+	@DeleteMapping("/{custId}")  // Take the customer ID from the URL path
+    public String deleteCustomer(@PathVariable String custId) {  // Change type to String to match the ID type
+        customerService.deleteCustomer(custId);
+        return "Customer deleted with ID " + custId;
+    }
+}
